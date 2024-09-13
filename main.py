@@ -11,4 +11,4 @@ def load_file(formatting_file):
 json_file_path = r"C:\Users\jwroi\Downloads\imandra-technical-interview-1.0.2\data\tags.json"
 
 #prints json file
-print(load_file(json_file_path))
+#print(load_file(json_file_path))
