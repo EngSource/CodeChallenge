@@ -1,0 +1,128 @@
+{
+    "8": {
+        "name": "BeginString",
+        "type": "string"
+    },
+    "9": {
+        "name": "BodyLength",
+        "type": "int"
+    },
+    "10": {
+        "name": "Checksum",
+        "type": "int"
+    },
+    "35": {
+        "name": "MsgType",
+        "type": "enum",
+        "values": {
+            "8": "ExecReport",
+            "D": "NewOrderSingle",
+            "G": "OrderCancelReplaceRequest",
+            "F": "OrderCancelRequest"
+        }
+    },
+    "49": {
+        "name": "SenderCompID",
+        "type": "string"
+    },
+    "56": {
+        "name": "TargetCompID",
+        "type": "string"
+    },
+    "52": {
+        "name": "SendingTime",
+        "type": "datetime"
+    },
+    "38": {
+        "name": "OrderQty",
+        "type": "int"
+    },
+    "55": {
+        "name": "Symbol",
+        "type": "string"
+    },
+    "11": {
+        "name": "ClOrdID",
+        "type": "string"
+    },
+    "41": {
+        "name": "OrigClOrdID",
+        "type": "string"
+    },
+    "40": {
+        "name": "OrdType",
+        "type": "enum",
+        "values": {
+            "2": "Limit"
+        }
+    },
+    "59": {
+        "name": "TimeInForce",
+        "type": "enum",
+        "values": {
+            "0": "Day"
+        }
+    },
+    "44": {
+        "name": "Price",
+        "type": "decimal"
+    },
+    "17": {
+        "name": "ExecID",
+        "type": "string"
+    },
+    "150": {
+        "name": "ExecType",
+        "type": "enum",
+        "values": {
+            "0": "New",
+            "4": "Canceled",
+            "5": "Replaced",
+            "8": "Rejected",
+            "F": "Fill"
+        }
+    },
+    "39": {
+        "name": "OrdStatus",
+        "type": "enum",
+        "values": {
+            "0": "New",
+            "1": "PartiallyFilled",
+            "2": "FullyFilled",
+            "4": "Canceled",
+            "5": "Replaced"
+        }
+    },
+    "54": {
+        "name": "Side",
+        "type": "enum",
+        "values": {
+            "1": "Buy",
+            "2": "Sell"
+        }
+    },
+    "32": {
+        "name": "LastQty",
+        "type": "int"
+    },
+    "31": {
+        "name": "LastPx",
+        "type": "decimal"
+    },
+    "151": {
+        "name": "LeavesQty",
+        "type": "int"
+    },
+    "14": {
+        "name": "CumQty",
+        "type": "int"
+    },
+    "58": {
+        "name": "Text",
+        "type": "string"
+    },
+    "880": {
+        "name": "TrdMatchID",
+        "type": "string"
+    }
+}
