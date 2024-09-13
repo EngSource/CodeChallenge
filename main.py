@@ -2,28 +2,56 @@
 
 import json
 
+
 #loads the json formatting file
-def load_json_file(formatting_file):
-    with open(formatting_file, 'r') as json_file:
-        return json.load(json_file)
+def load_json(json_file):
+    with open(json_file, 'r') as f:
+        return json.load(f)
 
-#loads the FIX file and splits it into packets
-def load_fix_file(data_file):
-    with open(data_file, 'r') as fix_file:
-        return fix_file.read().splitlines()
+#loads the FIX file
+def load_fix_log(fix_file):
+    with open(fix_file, 'r') as f:
+        return f.read()
+
+#parse a single FIX message string into a dictionary using the tags
+def parse_fix_message(message, tags):
+    #split the message into fields using the '|' operator
+    fields = message.split('|')
+    parsed_message = {}
+    #check if field contains tag and a value
+    for field in fields:
+        if '=' in field:
+            tag, value = field.split('=')
+            tag = tag.strip()
+            value = value.strip()
+            #pull the name for the tag
+            tag_name = tags.get(tag, {}).get('name', tag)
+            #check for enum
+            if tags.get(tag, {}).get('type') == 'enum':
+                #if so add parsed tag name to the dictionary
+                value = tags[tag]['values'].get(value, value)
+            parsed_message[tag_name] = value
+    return parsed_message
+
+#print each parsed message in json format
+def print_parsed_messages(parsed_messages):
+    for message in parsed_messages:
+        print(json.dumps(message, indent=4))
+
+#main function to load files, parse FIX message and print results
+def main():
+    #path locations
+    tags_file = 'tags.json'
+    fix_file = 'fix.log'
+    #load tag definitions from json file
+    tags = load_json(tags_file)
+    #load data from FIX file
+    fix_log = load_fix_log(fix_file)
+    #parse each message and store it in a list
+    messages = fix_log.split('|8=')
+    parsed_messages = [parse_fix_message('8=' + msg, tags) for msg in messages[1:]]
+    #print parsed messages in formatted json output
+    print_parsed_messages(parsed_messages)
 
 
-#Reference local json file
-json_file_path = "tags.json"
-
-#prints json file
-#print(load_json_file(json_file_path))
-
-#Reference local fix data file
-fix_file_path = "fix.log"
-
-log = load_fix_file(fix_file_path)
-
-packets = [packet.split('|') for packet in log]
-
-print(packets)
+if __name__ == "__main__": main()
