@@ -1,7 +1,7 @@
 #This is a Github Test of loading the json file
 
 import json
-
+import argparse
 
 #loads the json formatting file
 def load_json(json_file):
@@ -40,17 +40,17 @@ def print_parsed_messages(parsed_messages):
 
 #main function to load files, parse FIX message and print results
 def main():
-    #path locations
-    tags_file = 'tags.json'
-    fix_file = 'fix.log'
-    #load tag definitions from json file
-    tags = load_json(tags_file)
-    #load data from FIX file
-    fix_log = load_fix_log(fix_file)
-    #parse each message and store it in a list
+    #set up argument parser for command-line inputs
+    parser = argparse.ArgumentParser(description='Parse and print FIX messages.')
+    #add CLI arg for FIX file
+    parser.add_argument('-f', '--file', required=True, help='Path to the FIX log file.')
+    #add CLI arg for json
+    parser.add_argument('--tags', required=True, help='Path to the json tags file.')
+    args = parser.parse_args()
+    tags = load_json(args.tags)
+    fix_log = load_fix_log(args.file)
     messages = fix_log.split('|8=')
     parsed_messages = [parse_fix_message('8=' + msg, tags) for msg in messages[1:]]
-    #print parsed messages in formatted json output
     print_parsed_messages(parsed_messages)
 
 
