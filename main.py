@@ -38,11 +38,19 @@ def print_parsed_messages(parsed_messages):
     for message in parsed_messages:
         print(json.dumps(message, indent=4))
 
-#added new order count - make a list comprehension?
+#added new order count
 def count_new_orders(parsed_messages):
     count = 0
     for msg in parsed_messages:
         if msg.get('MsgType') == 'NewOrderSingle':
+            count += 1
+    return count
+
+#added accepted order count
+def count_accepted_orders(parsed_messages):
+    count = 0
+    for msg in parsed_messages:
+        if msg.get('ExecType') == 'New':
             count += 1
     return count
 
@@ -53,7 +61,7 @@ def main():
     #set up argument parser for command-line inputs
     parser = argparse.ArgumentParser(description='Parse and print FIX messages.')
     #add option for part2 - q1
-    parser.add_argument('command', choices=['part2-q1'], help="part2-q1 is available")
+    parser.add_argument('command', choices=['part2-q1', 'part2-q2'], help="part2-q1 is available")
     #add CLI arg for FIX file
     parser.add_argument('-f', '--file', required=True, help='Path to the FIX log file.')
     #add CLI arg for json
@@ -70,6 +78,9 @@ def main():
     if args.command == 'part2-q1':
         result = count_new_orders(parsed_messages)
         print(f"Number of new orders: {result}")
+    elif args.command == 'part2-q2':
+        result = count_accepted_orders(parsed_messages)
+        print(f"Number of accepted orders: {result}")
 
 
 
