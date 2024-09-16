@@ -73,12 +73,21 @@ def count_accepted_orders(parsed_messages):
     return count
 
 
+# Checks
+def count_total_traded(parsed_messages):
+    count = 0
+    for msg in parsed_messages:
+        if msg.get('ExecType') == 'Fill':
+            count += int(msg.get("LastQty"))
+    return count
+
+
 # main function to load files, parse FIX message and print results
 def main():
     # set up argument parser for command-line inputs
     parser = argparse.ArgumentParser(description='Parse and print FIX messages.')
     # add option for part2 - q1
-    parser.add_argument('command', choices=['part1', 'part2-q1', 'part2-q2'], help="select the part to run")
+    parser.add_argument('command', choices=['part1', 'part2-q1', 'part2-q2', 'part2-q3'], help="select the part to run")
     # add CLI arg for FIX file
     parser.add_argument('-f', '--file', required=True, help='Path to the FIX log file.')
     # add CLI arg for json
@@ -106,6 +115,9 @@ def main():
     elif args.command == 'part2-q2':
         result = count_accepted_orders(parsed_messages)
         print(f"Number of accepted orders: {result}")
+    elif args.command == 'part2-q3':
+        result = count_total_traded(parsed_messages)
+        print(f"The total amount traded is : {result}")
 
 
 if __name__ == "__main__": main()
